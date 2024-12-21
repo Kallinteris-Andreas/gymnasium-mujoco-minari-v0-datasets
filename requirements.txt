@@ -1,0 +1,8 @@
+stable_baselines3
+minari
+gymnasium[mujoco, other]
+mujoco
+huggingface_sb3
+wandb
+tensorboard
+sb3_contrib

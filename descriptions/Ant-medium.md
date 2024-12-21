@@ -1,0 +1,1 @@
+The data is collected from the `[Ant](https://gymnasium.farama.org/environments/mujoco/swimmer/)` environment. The Agent was trained with `Stable Baselines 3`'s implementation of `SAC` for $10 \cdot 10^6$ steps. This "expert" policy walks fast, but falls over

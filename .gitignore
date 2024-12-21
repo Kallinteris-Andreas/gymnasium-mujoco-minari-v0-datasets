@@ -169,3 +169,16 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+logs
+models
+old_models-rc2
+old-rc1
+__pycache__
+runs
+test_env
+test_env_rc2
+to_test
+train2.py
+videos
+wandb

@@ -1,0 +1,1 @@
+The data is collected from the `[HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/)` environment. The Agent was trained with `Stable Baselines 3`'s implementation of `SAC` for $200 \cdot 10^3$ steps. This "medium" policy runs slowly and falls over occasionally.
