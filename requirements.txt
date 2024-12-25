@@ -1,8 +1,8 @@
-stable_baselines3
-minari
-gymnasium[mujoco, other]
-mujoco
-huggingface_sb3
-wandb
-tensorboard
+stable_baselines3==2.4
 sb3_contrib
+gymnasium[mujoco, other]==1.0.0
+mujoco==3.1.5
+wandb==0.18.7
+minari
+huggingface_sb3
+tensorboard
