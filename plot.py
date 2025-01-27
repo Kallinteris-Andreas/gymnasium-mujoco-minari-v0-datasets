@@ -19,6 +19,9 @@ for algorithm in args.result_directory:
     returns = np.average(np.array([np.load(f'models/{algorithm}/run_{run}/evaluations.npz')['results'][:steps.size] for run in range(args.runs)]), axis=2)
     returns_len = np.average(np.array([np.load(f'models/{algorithm}/run_{run}/evaluations.npz')['ep_lengths'][:steps.size] for run in range(args.runs)]), axis=2)
 
+    returns = np.maximum.accumulate(returns, axis=1)
+    returns_len = np.maximum.accumulate(returns_len, axis=1)
+
     #if 'ahr' in algorithm:
         #options = "--"
     #else:

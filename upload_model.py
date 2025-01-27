@@ -3,17 +3,22 @@
 
 from huggingface_sb3 import package_to_hub
 from stable_baselines3 import PPO, SAC, TD3
+from sb3_contrib import TQC, TRPO, ARS
+from stable_baselines3.common.vec_env import VecEnv
 from stable_baselines3.common.env_util import make_vec_env
+import argparse
 
 
 HF_REPO = "farama-minari"
-ALGORITHM = "sac"
-PROFICIENCY = "simple"
-# PROFICIENCY = "medium"
-# PROFICIENCY = "expert"
-ENV_LIST = [
-    "Reacher",
-]
+parser = argparse.ArgumentParser()
+parser.add_argument("--algo", type=str)
+parser.add_argument("--proficiency", type=str)
+parser.add_argument("--environment", type=str)
+args = parser.parse_args()
+
+ALGORITHM = args.algo
+PROFICIENCY = args.proficiency
+ENV_LIST = [args.environment,]
 seed = 0
 
 EVAL_ENVS = 1000
@@ -34,30 +39,35 @@ if __name__ == "__main__":
         else:
             eval_env = make_vec_env(f"{env_id}-v5", n_envs=1)
 
-        if ALGORITHM == "sac":
+        if ALGORITHM.lower() == "sac":
             model = SAC.load(
-                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}-{seed}/best_model.zip",
+                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}/run_{seed}/best_model.zip",
+                #env=VecEnv,
             )
-        elif ALGORITHM == "td3":
+        elif ALGORITHM.lower() == "td3":
             model = TD3.load(
-                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}-{seed}/best_model.zip",
+                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}/run_{seed}/best_model.zip",
             )
-        elif ALGORITHM == "ppo":
+        elif ALGORITHM.lower() == "ppo":
             model = PPO.load(
-                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}-{seed}/best_model.zip",
+                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}/run_{seed}/best_model.zip",
+            )
+        elif ALGORITHM.lower() == "tqc":
+            model = TQC.load(
+                f"models/{env_id}-{ALGORITHM.upper()}-{PROFICIENCY}/run_{seed}/best_model.zip",
             )
 
         package_to_hub(
             model=model,
-            model_name=f"{env_id.lower()}-v5-{ALGORITHM}-{PROFICIENCY}",
+            model_name=f"{env_id.lower()}-v5-{ALGORITHM.upper()}-{PROFICIENCY}",
             model_architecture=ALGORITHM.upper(),
             env_id=f"{env_id}-v5",
             eval_env=eval_env,
-            # repo_id=f"{HF_REPO}/{env_id}-v5-{ALGORITHM.upper()}-{PROFICIENCY}",
-            repo_id=f"{HF_REPO}/TEST",
+            repo_id=f"{HF_REPO}/{env_id}-v5-{ALGORITHM.upper()}-{PROFICIENCY}",
+            #repo_id=f"{HF_REPO}/TEST",
             commit_message="model",
             is_deterministic=True,
             n_eval_episodes=EVAL_ENVS,
         )
 
-    print("FINISHED UPLOADING TO HF")
+    print("\nFINISHED UPLOADING TO HF")
