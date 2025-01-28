@@ -6,7 +6,7 @@ from sb3_contrib import TQC, TRPO, ARS
 from tqdm import tqdm
 
 ENV_IDS = [
-    ("InvertedPendulum", ("medium", "expert"), 1_000, "SAC"),
+    ("InvertedPendulum", ("medium", "expert"), 100_000, "SAC"),
     ("InvertedDoublePendulum", ("medium", "expert"), 100_000, "SAC"),
     ("Reacher", ("medium", "expert"), 500_000, "SAC"),
     ("Pusher", ("medium", "expert"), 500_000, "SAC"),
@@ -48,7 +48,7 @@ def create_dataset_from_policy(env_id, proficiency, collector_env, policy, n_ste
 def load_policy(env_id: str, algo: str, proficiency: str):
     model_checkpoint = load_from_hub(
         repo_id=f"farama-minari/{env_id}-v5-{algo.upper()}-{proficiency}",
-        filename=f"{env_id.lower()}-v5-{algo.lower()}-{proficiency}.zip",
+        filename=f"{env_id.lower()}-v5-{algo.upper()}-{proficiency}.zip",
     )
 
     match algo:
