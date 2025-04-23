@@ -19,6 +19,8 @@ ENV_IDS = [
     # ("HumanoidStandup", ("simple", "medium", "expert"), 1_000_000, "SAC"),
 ]
 
+DATASET_VERSION = "v0"
+
 
 def create_dataset_from_policy(env_id, proficiency, collector_env, policy, n_steps: int, algorithm_name):
     truncated = True
@@ -35,8 +37,8 @@ def create_dataset_from_policy(env_id, proficiency, collector_env, policy, n_ste
         obs, _, terminated, truncated, _ = env.step(action)
 
     return collector_env.create_dataset(
-        dataset_id=f"mujoco/{env_id.lower()}/{proficiency}-v0",
-        algorithm_name="SB3/{algorithm_name}",
+        dataset_id=f"mujoco/{env_id.lower()}/{proficiency}-{DATASET_VERSION}",
+        algorithm_name=f"SB3/{algorithm_name}",
         code_permalink="https://github.com/Farama-Foundation/minari-dataset-generation-scripts",
         author="Kallinteris Andreas",
         author_email="kallinteris@protonmail.com",
