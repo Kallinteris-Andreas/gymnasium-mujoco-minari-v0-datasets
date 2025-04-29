@@ -9,3 +9,6 @@ for dataset_id in minari.list_local_datasets().keys():
     print(f"{dataset_id} - Averate return: {episodic_return}")
     print(f"{dataset_id} - Episodes with a termination (%): {episodic_terminations_percentage}")
     print(f"{dataset_id} - Average epsidode lenght: {avg_episode_length}")
+
+    print(f"{dataset_id} - Observation_space: {ds.observation_space}")
+    print(f"{dataset_id} - Action_space: {ds.action_space}")
